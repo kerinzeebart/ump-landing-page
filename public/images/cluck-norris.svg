@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
+  <rect width="300" height="300" fill="#121212" />
+  <path d="M150 50 C 120 60, 100 80, 90 100 C 80 120, 75 150, 85 170 C 95 190, 110 210, 130 220 C 150 230, 180 235, 200 225 C 220 215, 235 195, 240 175 C 245 155, 240 125, 230 105 C 220 85, 200 70, 180 60 C 160 50, 130 45, 110 55 C 90 65, 80 85, 85 105 C 90 125, 110 140, 130 145 C 150 150, 175 145, 190 135 C 205 125, 215 105, 210 85 C 205 65, 185 50, 165 45 C 145 40, 120 45, 105 60" stroke="#d6c8b6" stroke-width="4" fill="none" />
+  <circle cx="130" cy="120" r="5" fill="#d6c8b6" />
+  <circle cx="170" cy="120" r="5" fill="#d6c8b6" />
+  <path d="M130 150 C 140 160, 160 160, 170 150" stroke="#d6c8b6" stroke-width="4" fill="none" />
+  <path d="M100 100 C 90 90, 80 85, 70 90" stroke="#d6c8b6" stroke-width="4" fill="none" />
+  <path d="M200 100 C 210 90, 220 85, 230 90" stroke="#d6c8b6" stroke-width="4" fill="none" />
+  <path d="M150 80 C 140 70, 135 60, 140 50 C 145 40, 155 35, 165 40 C 175 45, 180 55, 175 65 C 170 75, 160 80, 150 80" stroke="#d6c8b6" stroke-width="4" fill="none" />
+  <path d="M120 200 C 130 210, 145 215, 160 210 C 175 205, 185 195, 190 180" stroke="#d6c8b6" stroke-width="4" fill="none" />
+</svg>

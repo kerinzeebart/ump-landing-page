@@ -1,0 +1,280 @@
+.game-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+.game-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #4caf50;
+}
+
+.server-connection {
+  display: flex;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.server-connection input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.server-connection button,
+.game-controls button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.server-connection button:hover,
+.game-controls button:hover {
+  background-color: #45a049;
+}
+
+.server-connection button:disabled,
+.game-controls button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: #d32f2f;
+  background-color: #ffebee;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.game-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.create-pet {
+  background-color: #e8f5e9;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.create-pet h3 {
+  margin-top: 0;
+  color: #2e7d32;
+  text-align: center;
+}
+
+.pet-form {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.pet-form input,
+.pet-form select {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.pet-display {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.pet-display h3 {
+  background-color: #4caf50;
+  color: white;
+  margin: 0;
+  padding: 15px;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.animation {
+  background-color: #000;
+  color: #fff;
+  padding: 15px;
+  overflow-x: auto;
+  text-align: center;
+}
+
+.animation pre {
+  margin: 0;
+  font-family: monospace;
+  line-height: 1.2;
+  display: inline-block;
+  text-align: left;
+}
+
+.status {
+  padding: 15px;
+  background-color: #fff;
+  border-top: 1px solid #eee;
+}
+
+.status p {
+  margin: 0;
+  white-space: pre-line;
+  line-height: 1.5;
+}
+
+/* New Pet Controls Styling */
+.pet-controls {
+  background-color: #e8f5e9;
+  border-radius: 8px;
+  padding: 15px;
+  margin-top: 20px;
+}
+
+.pet-controls h4 {
+  color: #2e7d32;
+  margin-top: 0;
+  text-align: center;
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+}
+
+.control-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.control-group {
+  background-color: white;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.control-group h5 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #2e7d32;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.button-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.control-button:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+
+.control-button:active {
+  transform: translateY(0);
+}
+
+.control-button span[role="img"] {
+  font-size: 1.2rem;
+}
+
+.status-button {
+  width: 100%;
+}
+
+.loading-indicator {
+  text-align: center;
+  margin-top: 10px;
+  color: #666;
+  font-style: italic;
+}
+
+.chat-section {
+  margin-top: 20px;
+}
+
+/* Whimsical UMCP Theme */
+.game-container {
+  background-color: #fffaed;
+  border: 2px solid #ffc107;
+}
+
+.pet-display {
+  border: 2px solid #ffc107;
+}
+
+.pet-display h3 {
+  background-color: #ff9800;
+}
+
+.pet-controls {
+  background-color: #fff8e1;
+  border: 2px solid #ffc107;
+}
+
+.control-group {
+  border: 1px solid #ffe082;
+}
+
+.control-button {
+  background-color: #ff9800;
+}
+
+.control-button:hover {
+  background-color: #f57c00;
+}
+
+.create-pet {
+  background-color: #fff8e1;
+  border: 2px solid #ffc107;
+}
+
+.create-pet h3 {
+  color: #e65100;
+}
+
+.server-connection button {
+  background-color: #ff9800;
+}
+
+.server-connection button:hover {
+  background-color: #f57c00;
+}
+
+@media (max-width: 600px) {
+  .pet-form {
+    flex-direction: column;
+  }
+  
+  .control-section {
+    grid-template-columns: 1fr;
+  }
+}

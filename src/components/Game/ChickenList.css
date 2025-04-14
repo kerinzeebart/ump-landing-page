@@ -1,0 +1,72 @@
+/* ChickenList styles */
+.chicken-list-container {
+  background: #fffbe7;
+  border: 2px solid #ffd54f;
+  border-radius: 10px;
+  margin-top: 20px;
+  padding: 16px 20px 10px 20px;
+  box-shadow: 0 2px 8px rgba(255, 213, 79, 0.08);
+}
+.chicken-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.chicken-list-header h4 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #e65100;
+  letter-spacing: 0.01em;
+}
+.chicken-refresh-button {
+  background: #ffd54f;
+  color: #6d4c00;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+}
+.chicken-refresh-button:disabled {
+  background: #ffe082;
+  color: #bdbdbd;
+  cursor: not-allowed;
+}
+.chicken-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.chicken-list-item {
+  margin-bottom: 8px;
+}
+.chicken-list-select {
+  background: none;
+  border: none;
+  color: #4caf50;
+  font-size: 1.05rem;
+  cursor: pointer;
+  padding: 2px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+.chicken-list-select:hover {
+  background: #ffe082;
+  color: #e65100;
+}
+.chicken-type {
+  color: #888;
+  font-size: 0.95em;
+  margin-left: 2px;
+}
+.chicken-list-empty {
+  color: #aaa;
+  font-style: italic;
+  text-align: center;
+  margin: 10px 0;
+}

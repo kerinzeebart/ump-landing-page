@@ -1,0 +1,109 @@
+.mdm-iphone-mockup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  margin-top: 40px;
+}
+
+.mdm-iphone-device {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 520px;
+  width: 250px;
+  border: 4px solid #111;
+  border-radius: 32px;
+  background: #fff;
+  box-shadow: 10px 10px 24px 0px #d1dada;
+  overflow: hidden;
+}
+
+.mdm-iphone-screen {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #121212;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
+}
+
+.mdm-app-icon-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.mdm-app-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  margin-bottom: 8px;
+}
+
+.mdm-app-name {
+  color: white;
+  font-size: 14px;
+  margin: 0;
+  font-weight: 500;
+}
+
+.mdm-iphone-speaker {
+  border: 1px solid #111;
+  background: #111;
+  width: 64px;
+  height: 12px;
+  margin-top: 12px;
+  border-radius: 12px;
+  display: block;
+}
+
+.mdm-iphone-btn-right {
+  position: absolute;
+  right: -10px;
+  top: 80px;
+  border: 2px solid #111;
+  height: 40px;
+  border-radius: 8px;
+  width: 10px;
+  background: #eee;
+}
+
+.mdm-iphone-btn-left-small {
+  position: absolute;
+  left: -10px;
+  top: 64px;
+  border: 2px solid #111;
+  height: 24px;
+  border-radius: 8px;
+  width: 10px;
+  background: #eee;
+}
+
+.mdm-iphone-btn-left-mid {
+  position: absolute;
+  left: -10px;
+  top: 128px;
+  border: 2px solid #111;
+  height: 48px;
+  border-radius: 8px;
+  width: 10px;
+  background: #eee;
+}
+
+.mdm-iphone-btn-left-long {
+  position: absolute;
+  left: -10px;
+  top: 192px;
+  border: 2px solid #111;
+  height: 48px;
+  border-radius: 8px;
+  width: 10px;
+  background: #eee;
+}
