@@ -20,28 +20,6 @@ function App() {
   const [connected, setConnected] = useState(false);
   const [currentPet, setCurrentPet] = useState(null);
   
-  // Connect to MCP server on component mount
-  useEffect(() => {
-    const connectToServer = async () => {
-      try {
-        const success = await mcpClient.connect('ws://localhost:8080');
-        setConnected(success);
-        if (success) {
-          checkPet();
-        }
-      } catch (err) {
-        setError(`Failed to connect to MCP server: ${err.message}`);
-      }
-    };
-    
-    connectToServer();
-    
-    // Cleanup on unmount
-    return () => {
-      mcpClient.disconnect();
-    };
-  }, []);
-
   // Function to execute MCP commands using MCPClient and WebSockets
   const executeMcpCommand = async (command, ...args) => {
     setLoading(true);
@@ -125,14 +103,14 @@ function App() {
           const formattedAscii = response.animation
             .replace(/\n/g, '<br>')
             .replace(/ /g, '&nbsp;');
-          setPetStatus(formattedAscii + '<br><br>' + `${response.pet.name} is a ${response.pet.type}`);
+          setPetStatus(`${formattedAscii}<br><br>${response.pet.name} is a ${response.pet.type}`);
         } else {
           setPetStatus(`${response.pet.name} is a ${response.pet.type}`);
         }
         
         // After creating a pet, immediately check its status to get the animation
         if (command === 'create_pet') {
-          setTimeout(() => checkPet(), 500);
+          setTimeout(() => executeMcpCommand('check_pet'), 500);
         }
       }
       
@@ -165,7 +143,31 @@ function App() {
   const cleanPet = () => executeMcpCommand('clean_pet');
   const putToBed = () => executeMcpCommand('put_to_bed');
   const createPet = (name, type) => executeMcpCommand('create_pet', name, type);
+  
+  // Connect to MCP server on component mount
+  useEffect(() => {
+    const connectToServer = async () => {
+      try {
+        const success = await mcpClient.connect('ws://localhost:8080');
+        setConnected(success);
+        if (success) {
+          // Use the function directly here to avoid circular reference
+          executeMcpCommand('check_pet');
+        }
+      } catch (err) {
+        setError(`Failed to connect to MCP server: ${err.message}`);
+      }
+    };
+    
+    connectToServer();
+    
+    // Cleanup on unmount
+    return () => {
+      mcpClient.disconnect();
+    };
+  }, []); // Empty dependency array to run only on mount
 
+  
   return (
     <div className="App">
       <Header />
@@ -201,318 +203,148 @@ function App() {
           <button
             onClick={checkPet}
             style={{
-              padding: '10px',
+              padding: '10px 15px',
               margin: '5px',
               borderRadius: '5px',
               border: 'none',
               backgroundColor: '#4CAF50',
               color: 'white',
               cursor: 'pointer',
-              fontWeight: 'bold',
-              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-              transition: 'background-color 0.3s'
+              fontWeight: 'bold'
             }}
-            disabled={loading || !connected}>
+            disabled={loading}>
             Check Pet Status
           </button>
-          <hr style={{ margin: '20px 0', border: '1px solid #eee' }} />
+          <button
+            onClick={() => feedPet('snack')}
+            style={{
+              padding: '10px 15px',
+              margin: '5px',
+              borderRadius: '5px',
+              border: 'none',
+              backgroundColor: '#2196F3',
+              color: 'white',
+              cursor: 'pointer',
+              fontWeight: 'bold'
+            }}
+            disabled={loading}>
+            Feed Snack
+          </button>
+          <button
+            onClick={() => feedPet('meal')}
+            style={{
+              padding: '10px 15px',
+              margin: '5px',
+              borderRadius: '5px',
+              border: 'none',
+              backgroundColor: '#2196F3',
+              color: 'white',
+              cursor: 'pointer',
+              fontWeight: 'bold'
+            }}
+            disabled={loading}>
+            Feed Meal
+          </button>
+          <button
+            onClick={() => playWithPet('ball')}
+            style={{
+              padding: '10px 15px',
+              margin: '5px',
+              borderRadius: '5px',
+              border: 'none',
+              backgroundColor: '#FF9800',
+              color: 'white',
+              cursor: 'pointer',
+              fontWeight: 'bold'
+            }}
+            disabled={loading}>
+            Play Ball
+          </button>
+          <button
+            onClick={() => playWithPet('chase')}
+            style={{
+              padding: '10px 15px',
+              margin: '5px',
+              borderRadius: '5px',
+              border: 'none',
+              backgroundColor: '#FF9800',
+              color: 'white',
+              cursor: 'pointer',
+              fontWeight: 'bold'
+            }}
+            disabled={loading}>
+            Play Chase
+          </button>
+          <button
+            onClick={cleanPet}
+            style={{
+              padding: '10px 15px',
+              margin: '5px',
+              borderRadius: '5px',
+              border: 'none',
+              backgroundColor: '#9C27B0',
+              color: 'white',
+              cursor: 'pointer',
+              fontWeight: 'bold'
+            }}
+            disabled={loading}>
+            Clean Pet
+          </button>
+          <button
+            onClick={putToBed}
+            style={{
+              padding: '10px 15px',
+              margin: '5px',
+              borderRadius: '5px',
+              border: 'none',
+              backgroundColor: '#607D8B',
+              color: 'white',
+              cursor: 'pointer',
+              fontWeight: 'bold'
+            }}
+            disabled={loading}>
+            Put to Bed
+          </button>
+        </div>
 
-          <h3>Pet Interactions</h3>
-
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center' }}>
+        <div className="create-pet-form">
+          <h3>Create a New Pet</h3>
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+            <input 
+              type="text" 
+              placeholder="Pet Name" 
+              id="petName" 
+              style={{ margin: '0 5px', padding: '8px' }}
+            />
+            <select id="petType" style={{ margin: '0 5px', padding: '8px' }}>
+              <option value="cat">Cat</option>
+              <option value="dog">Dog</option>
+              <option value="dragon">Dragon</option>
+              <option value="chicken">Chicken</option>
+            </select>
             <button
-              onClick={() => feedPet('snack')}
-              style={{
-                ...{
-                  padding: '10px',
-                  margin: '5px',
-                  borderRadius: '5px',
-                  border: 'none',
-                  backgroundColor: '#8BC34A',
-                  color: 'white',
-                  cursor: 'pointer',
-                  fontWeight: 'bold',
-                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-                  transition: 'background-color 0.3s'
-                }
+              onClick={() => {
+                const name = document.getElementById('petName').value || 'Stefan';
+                const type = document.getElementById('petType').value;
+                createPet(name, type);
               }}
-              disabled={loading || !connected || !currentPet}>
-              <span role="img" aria-label="Snack">🍪</span> Feed Snack
-            </button>
-
-            <button
-              onClick={() => feedPet('meal')}
               style={{
-                ...{
-                  padding: '10px',
-                  margin: '5px',
-                  borderRadius: '5px',
-                  border: 'none',
-                  backgroundColor: '#8BC34A',
-                  color: 'white',
-                  cursor: 'pointer',
-                  fontWeight: 'bold',
-                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-                  transition: 'background-color 0.3s'
-                }
+                padding: '8px 15px',
+                margin: '0 5px',
+                borderRadius: '5px',
+                border: 'none',
+                backgroundColor: '#FF5722',
+                color: 'white',
+                cursor: 'pointer',
+                fontWeight: 'bold'
               }}
-              disabled={loading || !connected || !currentPet}>
-              <span role="img" aria-label="Meal">🍲</span> Feed Meal
+              disabled={loading}>
+              Create Pet
             </button>
-
-            <button
-              onClick={() => feedPet('feast')}
-              style={{
-                ...{
-                  padding: '10px',
-                  margin: '5px',
-                  borderRadius: '5px',
-                  border: 'none',
-                  backgroundColor: '#8BC34A',
-                  color: 'white',
-                  cursor: 'pointer',
-                  fontWeight: 'bold',
-                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-                  transition: 'background-color 0.3s'
-                }
-              }}
-              disabled={loading || !connected || !currentPet}>
-              <span role="img" aria-label="Feast">🍗</span> Feed Feast
-            </button>
-
-            <button
-              onClick={() => playWithPet('ball')}
-              style={{
-                ...{
-                  padding: '10px',
-                  margin: '5px',
-                  borderRadius: '5px',
-                  border: 'none',
-                  backgroundColor: '#FF5722',
-                  color: 'white',
-                  cursor: 'pointer',
-                  fontWeight: 'bold',
-                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-                  transition: 'background-color 0.3s'
-                }
-              }}
-              disabled={loading || !connected || !currentPet}>
-              <span role="img" aria-label="Ball">⚽</span> Play Ball
-            </button>
-
-            <button
-              onClick={() => playWithPet('chase')}
-              style={{
-                ...{
-                  padding: '10px',
-                  margin: '5px',
-                  borderRadius: '5px',
-                  border: 'none',
-                  backgroundColor: '#FF5722',
-                  color: 'white',
-                  cursor: 'pointer',
-                  fontWeight: 'bold',
-                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-                  transition: 'background-color 0.3s'
-                }
-              }}
-              disabled={loading || !connected || !currentPet}>
-              <span role="img" aria-label="Chase">🏃</span> Play Chase
-            </button>
-
-            <button
-              onClick={() => playWithPet('puzzle')}
-              style={{
-                ...{
-                  padding: '10px',
-                  margin: '5px',
-                  borderRadius: '5px',
-                  border: 'none',
-                  backgroundColor: '#FF5722',
-                  color: 'white',
-                  cursor: 'pointer',
-                  fontWeight: 'bold',
-                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-                  transition: 'background-color 0.3s'
-                }
-              }}
-              disabled={loading || !connected || !currentPet}>
-              <span role="img" aria-label="Puzzle">🧩</span> Play Puzzle
-            </button>
-
-            <button
-              onClick={cleanPet}
-              style={{
-                ...{
-                  padding: '10px',
-                  margin: '5px',
-                  borderRadius: '5px',
-                  border: 'none',
-                  backgroundColor: '#03A9F4',
-                  color: 'white',
-                  cursor: 'pointer',
-                  fontWeight: 'bold',
-                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-                  transition: 'background-color 0.3s'
-                }
-              }}
-              disabled={loading || !connected || !currentPet}>
-              <span role="img" aria-label="Clean">🛁</span> Clean Pet
-            </button>
-
-            <button
-              onClick={putToBed}
-              style={{
-                ...{
-                  padding: '10px',
-                  margin: '5px',
-                  borderRadius: '5px',
-                  border: 'none',
-                  backgroundColor: '#9C27B0',
-                  color: 'white',
-                  cursor: 'pointer',
-                  fontWeight: 'bold',
-                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-                  transition: 'background-color 0.3s'
-                }
-              }}
-              disabled={loading || !connected || !currentPet}>
-              <span role="img" aria-label="Sleep">💤</span> Put to Bed
-            </button>
-          </div>
-          <div style={{ marginTop: '20px', borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '20px' }}>
-            <h3>Create a New Pet</h3>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center' }}>
-              <button
-                onClick={() => createPet('Stefan', 'cat')}
-                style={{
-                  padding: '15px',
-                  margin: '5px',
-                  borderRadius: '8px',
-                  border: 'none',
-                  backgroundColor: 'var(--primary-color)',
-                  color: 'white',
-                  cursor: 'pointer',
-                  fontWeight: 'bold',
-                  boxShadow: '0 4px 8px rgba(230, 57, 70, 0.3)',
-                  transition: 'all 0.3s ease',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  minWidth: '120px'
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-3px)';
-                  e.currentTarget.style.boxShadow = '0 6px 12px rgba(230, 57, 70, 0.4)';
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 8px rgba(230, 57, 70, 0.3)';
-                }}
-                disabled={loading}>
-                <span role="img" aria-label="Cat" style={{ fontSize: '24px', marginBottom: '5px' }}>🐱</span>
-                <span>Create Stefan</span>
-                <span style={{ fontSize: '12px', opacity: 0.8 }}>Cat</span>
-              </button>
-
-              <button
-                onClick={() => createPet('Clucky', 'chicken')}
-                style={{
-                  padding: '15px',
-                  margin: '5px',
-                  borderRadius: '8px',
-                  border: 'none',
-                  backgroundColor: 'var(--secondary-color)',
-                  color: 'white',
-                  cursor: 'pointer',
-                  fontWeight: 'bold',
-                  boxShadow: '0 4px 8px rgba(244, 162, 97, 0.3)',
-                  transition: 'all 0.3s ease',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  minWidth: '120px'
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-3px)';
-                  e.currentTarget.style.boxShadow = '0 6px 12px rgba(244, 162, 97, 0.4)';
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 8px rgba(244, 162, 97, 0.3)';
-                }}
-                disabled={loading}>
-                <span role="img" aria-label="Chicken" style={{ fontSize: '24px', marginBottom: '5px' }}>🐔</span>
-                <span>Create Clucky</span>
-                <span style={{ fontSize: '12px', opacity: 0.8 }}>Chicken</span>
-              </button>
-              
-              <button
-                onClick={() => createPet('Drake', 'dragon')}
-                style={{
-                  padding: '15px',
-                  margin: '5px',
-                  borderRadius: '8px',
-                  border: 'none',
-                  backgroundColor: 'var(--accent-color)',
-                  color: 'white',
-                  cursor: 'pointer',
-                  fontWeight: 'bold',
-                  boxShadow: '0 4px 8px rgba(82, 183, 136, 0.3)',
-                  transition: 'all 0.3s ease',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  minWidth: '120px'
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-3px)';
-                  e.currentTarget.style.boxShadow = '0 6px 12px rgba(82, 183, 136, 0.4)';
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 8px rgba(82, 183, 136, 0.3)';
-                }}
-                disabled={loading}>
-                <span role="img" aria-label="Dragon" style={{ fontSize: '24px', marginBottom: '5px' }}>🐉</span>
-                <span>Create Drake</span>
-                <span style={{ fontSize: '12px', opacity: 0.8 }}>Dragon</span>
-              </button>
-              
-              <button
-                onClick={() => createPet('Buddy', 'dog')}
-                style={{
-                  padding: '15px',
-                  margin: '5px',
-                  borderRadius: '8px',
-                  border: 'none',
-                  backgroundColor: 'var(--highlight)',
-                  color: 'white',
-                  cursor: 'pointer',
-                  fontWeight: 'bold',
-                  boxShadow: '0 4px 8px rgba(255, 209, 102, 0.3)',
-                  transition: 'all 0.3s ease',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  minWidth: '120px'
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-3px)';
-                  e.currentTarget.style.boxShadow = '0 6px 12px rgba(255, 209, 102, 0.4)';
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 8px rgba(255, 209, 102, 0.3)';
-                }}
-                disabled={loading}>
-                <span role="img" aria-label="Dog" style={{ fontSize: '24px', marginBottom: '5px' }}>🐶</span>
-                <span>Create Buddy</span>
-                <span style={{ fontSize: '12px', opacity: 0.8 }}>Dog</span>
-              </button>
-            </div>
           </div>
         </div>
+
+        {loading && <div className="loading">Loading...</div>}
       </section>
       <Features />
       <CozyMechanics />

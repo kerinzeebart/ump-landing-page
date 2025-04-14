@@ -12,6 +12,7 @@ function VideoGallery() {
     { id: 4, title: 'Tree Environment', src: '/videos/Chicke04_tree.webm', thumbnail: '/images/chik.png' },
     { id: 5, title: 'Jump Mechanics', src: '/videos/Chicke04_jump_mechanics.webm', thumbnail: '/images/chik.png' },
     { id: 6, title: 'Run Mechanics', src: '/videos/Chicke05_run_mechanics.webm', thumbnail: '/images/chik.png' },
+    { id: 7, title: 'Blueprint Smart Blocks', src: '/videos/Chicke05_smart_blocks.webm', thumbnail: '/images/chik.png' },
   ];
 
   return (

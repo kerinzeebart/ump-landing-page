@@ -35,6 +35,14 @@ function Features() {
       <path d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88" stroke="#e63946" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   );
+  
+  const proceduralIcon = (
+    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M21 16V8.00002C20.9996 7.6493 20.9071 7.30483 20.7315 7.00119C20.556 6.69754 20.3037 6.44539 20 6.27002L13 2.27002C12.696 2.09449 12.3511 2.00208 12 2.00208C11.6489 2.00208 11.304 2.09449 11 2.27002L4 6.27002C3.69626 6.44539 3.44398 6.69754 3.26846 7.00119C3.09294 7.30483 3.00036 7.6493 3 8.00002V16C3.00036 16.3508 3.09294 16.6952 3.26846 16.9989C3.44398 17.3025 3.69626 17.5547 4 17.73L11 21.73C11.304 21.9056 11.6489 21.998 12 21.998C12.3511 21.998 12.696 21.9056 13 21.73L20 17.73C20.3037 17.5547 20.556 17.3025 20.7315 16.9989C20.9071 16.6952 20.9996 16.3508 21 16Z" stroke="#e63946" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M3.27002 6.96002L12 12.01L20.73 6.96002" stroke="#e63946" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M12 22.08V12" stroke="#e63946" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
 
   return (
     <>
@@ -202,6 +210,25 @@ function Features() {
                 <li style={{ marginBottom: '8px' }}>Character development</li>
                 <li style={{ marginBottom: '8px' }}>Friendship mechanics</li>
                 <li>Community events</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="feature-card" style={{ 
+            backgroundColor: 'var(--dark-secondary)', 
+            padding: '30px', 
+            borderRadius: '16px',
+            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
+            transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+          }}>
+            <div style={{ marginBottom: '20px' }}>{proceduralIcon}</div>
+            <h3 style={{ fontSize: '1.5rem', marginBottom: '15px', color: 'var(--primary-color)' }}>Procedural Worlds</h3>
+            <p style={{ color: 'var(--light-text)' }}>Experience endless variety with our advanced procedural generation system using Wave Function Collapse and UE5's PCG toolkit to create unique environments every time you play.</p>
+            <div style={{ marginTop: '20px', textAlign: 'left' }}>
+              <ul style={{ paddingLeft: '20px', textAlign: 'left', color: 'var(--light-text)' }}>
+                <li style={{ marginBottom: '8px' }}>Wave Function Collapse algorithm</li>
+                <li style={{ marginBottom: '8px' }}>UE5 PCG integration</li>
+                <li>Adaptive difficulty scaling</li>
               </ul>
             </div>
           </div>
