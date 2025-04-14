@@ -344,6 +344,25 @@ function Connectivity() {
               textAlign: 'left'
             }}>Physiological Data Integration</h3>
             
+            <div style={{
+              marginBottom: '20px',
+              borderRadius: '12px',
+              overflow: 'hidden',
+              boxShadow: '0 10px 20px rgba(0, 0, 0, 0.2)',
+              border: '2px solid rgba(230, 57, 70, 0.3)'
+            }}>
+              <img 
+                src="/images/Polarp10AppleHealth.png" 
+                alt="Polar H10 Apple Health Integration" 
+                style={{
+                  width: '100%',
+                  display: 'block',
+                  objectFit: 'cover'
+                }}
+                data-component-name="Connectivity"
+              />
+            </div>
+            
             <p style={{ 
               color: 'var(--light-text)',
               marginBottom: '20px',

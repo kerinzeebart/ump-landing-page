@@ -36,28 +36,41 @@ function FeatheredMemories() {
         
         <div style={{ 
           display: 'flex', 
-          flexWrap: 'wrap', 
-          alignItems: 'center',
-          gap: '40px',
+          flexDirection: 'column',
           backgroundColor: 'var(--dark-secondary)',
           borderRadius: '16px',
           padding: 'clamp(20px, 5vw, 40px)',
           boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
           marginBottom: '40px'
-        }}>
-          <div style={{ flex: '1', minWidth: '300px', position: 'relative' }}>
+        }} data-component-name="FeatheredMemories">
+          {/* Top image with maintained aspect ratio */}
+          <div style={{ 
+            width: '100%', 
+            marginBottom: '30px',
+            position: 'relative' 
+          }}>
             <img 
               src="/images/Feathered-Memories.png" 
               alt="Feathered Memories" 
+              data-component-name="FeatheredMemories"
               style={{ 
                 width: '100%',
+                maxHeight: '400px',
                 borderRadius: '12px',
                 boxShadow: '0 15px 30px rgba(0, 0, 0, 0.3)',
                 border: '2px solid rgba(230, 57, 70, 0.3)',
-                objectFit: 'cover'
+                objectFit: 'contain'
               }} 
             />
           </div>
+          
+          {/* Content section */}
+          <div style={{ 
+            display: 'flex', 
+            flexWrap: 'wrap', 
+            alignItems: 'center',
+            gap: '40px',
+          }}>
           
           <div style={{ flex: '1', minWidth: '300px', textAlign: 'left' }}>
             <h3 style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', marginBottom: '20px', color: 'var(--primary-color)' }}>
@@ -118,6 +131,7 @@ function FeatheredMemories() {
                 Unique Personalities
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>

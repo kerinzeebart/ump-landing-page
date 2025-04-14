@@ -65,8 +65,9 @@ function Gameplay() {
             </div>
             <div style={{ flex: '1', minWidth: '300px', position: 'relative' }}>
               <img 
-                src="/images/Unreal-Engine-Integration.png" 
-                alt="Unreal Engine Integration"
+                src="/images/procedural.jpg" 
+                alt="Procedural Generation"
+                data-component-name="Gameplay"
                 style={{ 
                   width: '100%',
                   borderRadius: '12px',
@@ -86,7 +87,7 @@ function Gameplay() {
                 fontSize: '0.9rem',
                 fontWeight: 'bold'
               }}>
-                Unreal Engine Integration
+                Procedural Generation
               </div>
             </div>
           </div>
