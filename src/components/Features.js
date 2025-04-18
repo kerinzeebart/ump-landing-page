@@ -7,6 +7,7 @@ function Features() {
   const chickenRef = useRef(null);
   const eggRef = useRef(null);
   const crackingEggRef = useRef(null);
+  let memoriesRef = useRef(null);
   // Create refs to store event handler functions
   const onScrollRef = useRef(null);
   const handleResizeRef = useRef(null);
@@ -420,32 +421,228 @@ function Features() {
             Experience the perfect blend of stealth action and cozy gameplay in Ultra Mega Chicken Patrol
           </p>
         
-        <div style={{ position: 'relative', maxWidth: '800px', margin: '0 auto 40px' }}>
-          <img 
-            src="/images/Feathered-Memories.png" 
-            alt="Feathered Memories"
+        <div 
+          style={{ position: 'relative', maxWidth: '800px', margin: '0 auto 40px' }} 
+          className="feathered-memories-container"
+          ref={memoriesRef = useRef(null)}
+        >
+          <div 
+            ref={el => {
+              if (el && !el.animationInitialized) {
+                const handleScroll = () => {
+                  if (!memoriesRef.current) return;
+                  
+                  const rect = memoriesRef.current.getBoundingClientRect();
+                  const isVisible = rect.top < window.innerHeight * 0.8 && rect.bottom > 0;
+                  
+                  if (isVisible && !el.animationsTriggered) {
+                    // Text animation for the title
+                    anime({
+                      targets: '.feathered-memories-title',
+                      opacity: [0, 1],
+                      translateY: [20, 0],
+                      easing: 'easeOutExpo',
+                      duration: 1200
+                    });
+                    
+                    // Animations for each feature item
+                    anime({
+                      targets: '.feature-item',
+                      opacity: [0, 1],
+                      translateX: [40, 0],
+                      easing: 'easeOutElastic(1.2, 0.5)',
+                      duration: 1200,
+                      delay: (el, i) => 400 + (i * 300),
+                    });
+                    
+                    // Number counting animation
+                    anime({
+                      targets: '.feature-number',
+                      scale: [0, 1],
+                      rotate: [-10, 0],
+                      easing: 'easeOutBack',
+                      duration: 800,
+                      delay: (el, i) => 300 + (i * 300)
+                    });
+                    
+                    el.animationsTriggered = true;
+                  }
+                };
+                
+                // Initial setup
+                handleScroll();
+                
+                // Add scroll listener
+                window.addEventListener('scroll', handleScroll);
+                
+                // Cleanup function
+                el.cleanup = () => {
+                  window.removeEventListener('scroll', handleScroll);
+                };
+                
+                el.animationInitialized = true;
+              }
+            }}
             style={{ 
               width: '100%',
               borderRadius: '16px',
-              boxShadow: '0 15px 30px rgba(0, 0, 0, 0.3)',
+              boxShadow: '0 15px 30px rgba(0, 0, 0, 0.5)',
               border: '2px solid rgba(230, 57, 70, 0.3)',
-              objectFit: 'cover'
+              background: 'var(--dark-secondary)',
+              padding: '30px',
+              color: 'var(--light-text)',
+              position: 'relative',
+              opacity: 0, // Start hidden, will be animated in
+              transform: 'translateY(30px)' // Start lower, will be animated up
             }} 
-          />
-          <div style={{
-            position: 'absolute',
-            bottom: '15px',
-            right: '15px',
-            backgroundColor: 'rgba(18, 18, 18, 0.7)',
-            padding: '8px 12px',
-            borderRadius: '8px',
-            color: 'var(--light-text)',
-            fontSize: '0.9rem',
-            fontWeight: 'bold'
-          }}>
-            Feathered Memories
+            className="memories-content"
+          >
+            <h2 className="feathered-memories-title" style={{
+              textAlign: 'center',
+              marginBottom: '30px',
+              color: 'var(--primary-color)',
+              fontWeight: 'bold',
+              fontSize: '32px',
+              textShadow: '0 2px 8px rgba(230, 57, 70, 0.3)',
+              fontFamily: '"Nunito", sans-serif',
+              opacity: 0, // Start hidden
+              position: 'relative',
+              paddingBottom: '15px'
+            }}>
+              FEATHERED MEMORIES
+              <div style={{
+                position: 'absolute',
+                bottom: 0,
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: '80px',
+                height: '3px',
+                backgroundColor: 'var(--primary-color)',
+                borderRadius: '2px'
+              }} />
+            </h2>
+            
+            <div className="feature-list" style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
+              <div className="feature-item" style={{ display: 'flex', alignItems: 'flex-start', gap: '15px', marginLeft: '20px' }}>
+                <div className="feature-number" style={{
+                  background: 'var(--primary-color)',
+                  color: 'white',
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 'bold',
+                  flexShrink: 0,
+                  boxShadow: '0 4px 12px rgba(230, 57, 70, 0.4)',
+                  opacity: 0 // Start hidden
+                }}>1</div>
+                <div>
+                  <h3 style={{ margin: '0 0 5px 0', fontWeight: 'bold', fontSize: '22px', color: 'var(--primary-color)' }}>Remembered Interaction</h3>
+                  <p style={{ margin: 0, fontSize: '18px', lineHeight: '1.5', color: 'var(--light-text)' }}>Chickens recall your actions and play style</p>
+                </div>
+              </div>
+              
+              <div className="feature-item" style={{ display: 'flex', alignItems: 'flex-start', gap: '15px', opacity: 0, marginLeft: '20px' }}>
+                <div className="feature-number" style={{
+                  background: 'var(--primary-color)',
+                  color: 'white',
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 'bold',
+                  flexShrink: 0,
+                  boxShadow: '0 4px 12px rgba(230, 57, 70, 0.4)'
+                }}>2</div>
+                <div>
+                  <h3 style={{ margin: '0 0 5px 0', fontWeight: 'bold', fontSize: '22px', color: 'var(--primary-color)' }}>Developed Relationships</h3>
+                  <p style={{ margin: 0, fontSize: '18px', lineHeight: '1.5', color: 'var(--light-text)' }}>Form bonds with your flock</p>
+                </div>
+              </div>
+              
+              <div className="feature-item" style={{ display: 'flex', alignItems: 'flex-start', gap: '15px', opacity: 0, marginLeft: '20px' }}>
+                <div className="feature-number" style={{
+                  background: 'var(--primary-color)',
+                  color: 'white',
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 'bold',
+                  flexShrink: 0,
+                  boxShadow: '0 4px 12px rgba(230, 57, 70, 0.4)'
+                }}>3</div>
+                <div>
+                  <h3 style={{ margin: '0 0 5px 0', fontWeight: 'bold', fontSize: '22px', color: 'var(--primary-color)' }}>Unique Playful Atmosphere</h3>
+                  <p style={{ margin: 0, fontSize: '18px', lineHeight: '1.5', color: 'var(--light-text)' }}>Contribute to the sanctuary's look & feel</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Removed the UMCP 2025 button */}
           </div>
+          
+          {/* Add scroll-triggered animation for the entire container */}
+          <style>{`
+            .memories-content {
+              transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            }
+            
+            .memories-content.visible {
+              opacity: 1 !important;
+              transform: translateY(0) !important;
+            }
+            
+            .feature-item {
+              transition: transform 0.3s ease, opacity 0.5s ease;
+            }
+            
+            .feature-item:hover {
+              transform: translateX(10px);
+            }
+            
+            .feature-number {
+              transition: transform 0.3s ease;
+            }
+            
+            .feature-item:hover .feature-number {
+              transform: rotate(10deg) scale(1.1);
+            }
+          `}</style>
         </div>
+        
+        {useEffect(() => {
+          const handleScroll = () => {
+            const memorySection = document.querySelector('.memories-content');
+            if (!memorySection || !memoriesRef.current) return;
+            
+            const rect = memoriesRef.current.getBoundingClientRect();
+            const isInView = rect.top < window.innerHeight * 0.8 && rect.bottom > 0;
+            
+            if (isInView) {
+              memorySection.classList.add('visible');
+            } else {
+              memorySection.classList.remove('visible');
+            }
+          };
+          
+          // Run once on mount
+          handleScroll();
+          
+          // Add scroll listener
+          window.addEventListener('scroll', handleScroll);
+          
+          // Cleanup
+          return () => {
+            window.removeEventListener('scroll', handleScroll);
+          };
+        }, [])}
         
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px', margin: '0 auto' }}>
           <div className="feature-card" style={{ 

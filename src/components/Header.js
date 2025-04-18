@@ -69,7 +69,34 @@ function Header() {
         <a href="#features" style={linkStyle}>Features</a>
         <a href="#characters" style={linkStyle}>Characters</a>
         <a href="#gameplay" style={linkStyle}>Gameplay</a>
-        <a href="#download" style={activeLinkStyle}>Pre-Order</a>
+        <a href="#download" style={{...activeLinkStyle, position: 'relative'}}>
+          Demo
+          <span style={{
+            position: 'absolute',
+            top: '-12px',
+            right: '-20px', // Moved 25px to the left (from -45px to -20px)
+            backgroundColor: '#e63946',
+            color: 'white',
+            fontSize: '0.6rem',
+            padding: '3px 8px',
+            borderRadius: '10px',
+            fontWeight: 'bold',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+            transform: 'rotate(15deg)',
+            animation: 'pulse 2s infinite',
+            whiteSpace: 'nowrap', // Ensures text doesn't wrap
+            zIndex: 1001 // Ensures it's above other elements
+          }}>
+            COMING SOON
+          </span>
+          <style>{`
+            @keyframes pulse {
+              0% { transform: rotate(15deg) scale(1); }
+              50% { transform: rotate(15deg) scale(1.1); }
+              100% { transform: rotate(15deg) scale(1); }
+            }
+          `}</style>
+        </a>
       </nav>
     </header>
   );
