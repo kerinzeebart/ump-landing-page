@@ -1,0 +1,9 @@
+Changes made to the UMCP Landing Page:
+
+1. Updated character images:
+   - Replaced Plucker's image with Chicken_Plucker.jpg
+   - Replaced Cluck Norris's image with FatChicken.png
+   - Replaced Henrietta's image with SupportChicken.jpg
+   - Replaced Colonel Sanders's image with TacticalChicken.png
+
+These changes were made in the Characters.js component by updating the image paths in the characters array.

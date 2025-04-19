@@ -9,7 +9,7 @@ function Characters() {
       id: 0,
       name: 'Plucker',
       role: 'Parkour/Stealth',
-      image: '/images/plucker.svg',
+      image: '/images/Chicken_Plucker.jpg',
       description: 'The agile infiltration specialist of the team. With lightning-fast reflexes and unparalleled climbing abilities, Plucker can reach places others can\'t even dream of accessing.',
       abilities: ['Wall Jump', 'Silent Takedown', 'Shadow Blend'],
       stats: {
@@ -24,7 +24,7 @@ function Characters() {
       id: 1,
       name: 'Cluck Norris',
       role: 'Tank/Defense',
-      image: '/images/cluck-norris.svg',
+      image: '/images/FatChicken.png',
       description: 'The powerhouse of the Chicken Patrol. With his incredible strength and unwavering courage, Cluck Norris stands as the first line of defense against any threat to the sanctuary.',
       abilities: ['Ground Pound', 'Feather Shield', 'Intimidating Crow'],
       stats: {
@@ -39,7 +39,7 @@ function Characters() {
       id: 2,
       name: 'Henrietta',
       role: 'Tech/Support',
-      image: '/images/henrietta.svg',
+      image: '/images/SupportChicken.jpg',
       description: 'The brains behind the operation. Henrietta\'s technical genius allows the team to overcome security systems and communicate effectively during missions.',
       abilities: ['Hack Systems', 'Deploy Drones', 'Remote Assistance'],
       stats: {
@@ -54,7 +54,7 @@ function Characters() {
       id: 3,
       name: 'Colonel Sanders',
       role: 'Leader/Strategist',
-      image: '/images/colonel-sanders.svg',
+      image: '/images/TacticalChicken.png',
       description: 'The veteran leader of the Ultra Mega Chicken Patrol. With years of experience in covert operations, the Colonel plans each mission with meticulous detail.',
       abilities: ['Rally Cry', 'Strategic Planning', 'Battlefield Control'],
       stats: {
