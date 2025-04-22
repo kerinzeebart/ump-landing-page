@@ -62,32 +62,35 @@ function Features() {
       
       setShowCracking(true);
       
-      // Create a timeline for the egg cracking sequence
+      // Create a timeline for the egg cracking sequence with proper timing
       const crackingSequence = [
-        { state: '🥚', delay: 0 },
-        { state: '🥚\u200D\u2728', delay: 150 }, // Egg with sparkle
-        { state: '🐣', delay: 150 },  // Hatching chick
-        { state: '🐥', delay: 150 },  // Baby chick
-        { state: '', delay: 100 }     // Empty (chicken appears)
+        { state: '🥚', delay: 250 },
+        { state: '🥚‍✨', delay: 300 }, // Egg with sparkle - longer display time
+        { state: '🐣', delay: 300 },  // Hatching chick - longer display time
+        { state: '🐥', delay: 300 },  // Baby chick - longer display time
+        { state: '', delay: 200 }     // Empty (chicken appears) - ensure proper transition
       ];
       
-      // Play the sequence
+      // Play the sequence with more reliable timing
       let currentIndex = 0;
-      const sequenceInterval = setInterval(() => {
+      const playNextFrame = () => {
         if (currentIndex < crackingSequence.length) {
           setEggState(crackingSequence[currentIndex].state);
+          setTimeout(
+            playNextFrame, 
+            crackingSequence[currentIndex].delay
+          );
           currentIndex++;
         } else {
-          clearInterval(sequenceInterval);
-          setChickenHatched(true);
-          
-          // Make the chicken clickable but don't start following automatically
+          // After sequence completes, show the chicken with a slight delay
           setTimeout(() => {
             setChickenHatched(true);
-            // setupMouseFollowing is called when chickenClicked is set to true
-          }, 500);
+          }, 200);
         }
-      }, 150);
+      };
+      
+      // Start the sequence
+      playNextFrame();
     }
     
     // Setup mouse following behavior for the hatched chicken - store in ref for access outside useEffect

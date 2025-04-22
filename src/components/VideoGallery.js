@@ -23,7 +23,7 @@ function VideoGallery() {
       paddingBottom: '100px',
     }}>
       <div className="container">
-        <h2>Gameplay Videos</h2>
+        <h2>Gameplay Prototypes UE5</h2>
         <p style={{ maxWidth: '700px', margin: '0 auto 60px', fontSize: '1.2rem', color: 'var(--secondary-color)' }}>
           Watch Ultra Mega Chicken Patrol in action with these featured gameplay clips
         </p>

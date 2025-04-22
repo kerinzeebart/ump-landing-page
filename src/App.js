@@ -173,7 +173,7 @@ function App() {
       <Header />
       <Hero />
       <section className="pet-interaction">
-        <h2>Virtual Pet Interaction</h2>
+        <h2>MCP Virtual Pet Simulator</h2>
 
         <div className="connection-status">
           <div style={{

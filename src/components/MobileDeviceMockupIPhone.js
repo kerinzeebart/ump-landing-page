@@ -13,8 +13,8 @@ const MobileDeviceMockupIPhone = () => {
         
         <div className="mdm-iphone-screen">
           <div className="mdm-app-icon-container">
-            <img src="/images/Icon.png" alt="UMCP App Icon" className="mdm-app-icon" />
-            <p className="mdm-app-name">UMCP</p>
+            <img src="/images/UMCP_Arcade_Cabinet.png" alt="UMCP Arcade Cabinet" className="mdm-arcade-cabinet" />
+            <p className="mdm-app-name">Arcade Mode</p>
           </div>
         </div>
       </div>

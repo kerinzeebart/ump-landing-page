@@ -199,6 +199,98 @@ function Hero() {
             <span style={{ padding: '8px 16px', background: 'rgba(82, 183, 136, 0.2)', borderRadius: '20px', color: '#52b788', fontWeight: 'bold', fontSize: '1rem' }}>Mobile</span>
           </div>
 
+          {/* UMCP Explanation Section */}
+          <div style={{ ...fadeInDelay2, position: 'relative', margin: '40px auto', maxWidth: '900px', background: 'rgba(30, 30, 30, 0.7)', padding: '30px', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)' }}>
+            <h2 style={{ fontSize: '2rem', color: '#f8f9fa', marginBottom: '25px', textAlign: 'left' }}>
+              <span style={{ color: '#e63946' }}>🤔</span> So... what exactly is this?
+            </h2>
+            
+            <div style={{ textAlign: 'left', color: '#f8f9fa', lineHeight: '1.6' }}>
+              <p style={{ fontSize: '1.1rem', marginBottom: '20px' }}>
+                Imagine you want to make your own 3‑D game but have zero time (or patience) to wrestle with complicated software. uMCP is our "golden cable" that connects three things:
+              </p>
+              
+              <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '15px' }}>
+                <span style={{ fontSize: '1.5rem', marginRight: '15px', color: '#e63946' }}>1️⃣</span>
+                <p style={{ margin: 0, fontSize: '1.1rem' }}>
+                  <strong style={{ color: '#f4a261' }}>Your idea</strong> – you just type what you want on‑screen: "snowy valley," "moving robot," "wooden bridge."
+                </p>
+              </div>
+              
+              <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '15px' }}>
+                <span style={{ fontSize: '1.5rem', marginRight: '15px', color: '#e63946' }}>2️⃣</span>
+                <p style={{ margin: 0, fontSize: '1.1rem' }}>
+                  <strong style={{ color: '#f4a261' }}>A digital helper</strong> – a smart program that hunts down or builds those objects for you and hands them to the game engine.
+                </p>
+              </div>
+              
+              <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '25px' }}>
+                <span style={{ fontSize: '1.5rem', marginRight: '15px', color: '#e63946' }}>3️⃣</span>
+                <p style={{ margin: 0, fontSize: '1.1rem' }}>
+                  <strong style={{ color: '#f4a261' }}>A ready‑to‑play scene in Unreal Engine</strong> – the same engine big studios use. Thanks to uMCP everything shows up there automatically.
+                </p>
+              </div>
+              
+              <div style={{ height: '2px', background: 'rgba(244, 162, 97, 0.3)', margin: '30px 0' }}></div>
+              
+              <h3 style={{ fontSize: '1.6rem', color: '#f4a261', marginBottom: '20px', textAlign: 'left' }}>
+                <span style={{ marginRight: '10px' }}>🎮</span> Fun instead of loading bars
+              </h3>
+              
+              <p style={{ fontSize: '1.1rem', marginBottom: '20px' }}>
+                While the helper "does its magic" in the background (it can take a few minutes), you don't stare at a boring progress bar. You fire up the Chicken Task Force mini‑game:
+              </p>
+              
+              <ul style={{ listStyleType: 'none', padding: 0, margin: '0 0 25px 0' }}>
+                <li style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '15px' }}>
+                  <span style={{ fontSize: '1.2rem', marginRight: '15px', color: '#52b788' }}>🐔</span>
+                  <p style={{ margin: 0, fontSize: '1.1rem' }}>
+                    <strong style={{ color: '#f4a261' }}>Player 1</strong> base character controls a friendly chicken that parkours to missions, gathers grain, hops over platforms—each grain or egg collected finishes another chunk of the real task.
+                  </p>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '15px' }}>
+                  <span style={{ fontSize: '1.2rem', marginRight: '15px', color: '#52b788' }}>📷</span>
+                  <p style={{ margin: 0, fontSize: '1.1rem' }}>
+                    <strong style={{ color: '#f4a261' }}>Player 2</strong> base character is a Chicken with a pulley "drone camera", films the chicken's stunts, and can slide bridges or open gates. This player acts as the interactive camera operator of the game filming the Player 1 actions and helping him progress during the missions.
+                  </p>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'flex-start' }}>
+                  <span style={{ fontSize: '1.2rem', marginRight: '15px', color: '#52b788' }}>❤️</span>
+                  <p style={{ margin: 0, fontSize: '1.1rem' }}>
+                    Put on a heart‑rate band (e.g., Apple Watch). The game notices how fast your heart beats and slows down or speeds up the action so it always feels good.
+                  </p>
+                </li>
+              </ul>
+              
+              <div style={{ height: '2px', background: 'rgba(244, 162, 97, 0.3)', margin: '30px 0' }}></div>
+              
+              <h3 style={{ fontSize: '1.6rem', color: '#f4a261', marginBottom: '20px', textAlign: 'left' }}>
+                <span style={{ marginRight: '10px' }}>✨</span> Why is this cool?
+              </h3>
+              
+              <ul style={{ listStyleType: 'none', padding: 0, margin: 0 }}>
+                <li style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '15px' }}>
+                  <span style={{ fontSize: '1.2rem', marginRight: '15px', color: '#e63946' }}>🔄</span>
+                  <p style={{ margin: 0, fontSize: '1.1rem' }}>
+                    <strong style={{ color: '#f4a261' }}>Two things at once</strong> – the real game is being built in the background while you're playing.
+                  </p>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '15px' }}>
+                  <span style={{ fontSize: '1.2rem', marginRight: '15px', color: '#e63946' }}>🧠</span>
+                  <p style={{ margin: 0, fontSize: '1.1rem' }}>
+                    <strong style={{ color: '#f4a261' }}>Learn Unreal Engine without manuals</strong> – chickens will explain what is going on, every egg, obstacle, or robot in the mini‑game represents a piece of work the computer is doing in the engine that monitors tasks via the a real MCP server.
+                  </p>
+                </li>
+                <li style={{ display: 'flex', alignItems: 'flex-start' }}>
+                  <span style={{ fontSize: '1.2rem', marginRight: '15px', color: '#e63946' }}>💬</span>
+                  <p style={{ margin: 0, fontSize: '1.1rem' }}>
+                    <strong style={{ color: '#f4a261' }}>No tech jargon</strong> – you don't have to know what "materials," "scripts," or "imports" are. You type "I want a wooden cabin by the lake" and... voila!
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
           <div style={{ ...fadeInDelay2, position: 'relative', margin: '0 auto 50px', maxWidth: '900px' }}>
             <div 
               style={{
