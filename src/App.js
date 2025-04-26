@@ -131,6 +131,9 @@ function App() {
       }
     } catch (error) {
       console.error(`Error executing ${command}:`, error);
+      console.error('Error Name:', error.name); // Log the specific error name (e.g., AbortError)
+      console.error('Error Message:', error.message);
+      console.error('Error Stack:', error.stack); // Log the stack trace if available
       setError(`Error: ${error.message}`);
     } finally {
       setLoading(false);
