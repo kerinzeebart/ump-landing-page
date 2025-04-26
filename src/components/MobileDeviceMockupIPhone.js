@@ -12,9 +12,16 @@ const MobileDeviceMockupIPhone = () => {
         <span className="mdm-iphone-btn-left-long"></span>
         
         <div className="mdm-iphone-screen">
-          <div className="mdm-app-icon-container">
-            <img src="/images/UMCP_Arcade_Cabinet.png" alt="UMCP Arcade Cabinet" className="mdm-arcade-cabinet" />
-            <p className="mdm-app-name">Arcade Mode</p>
+          <div className="mdm-app-icon-container" style={{ textAlign: 'center' }}>
+            <a 
+              href="https://app.spline.design/community/file/d6f6f5d1-57e1-4eb3-aa34-6dbd7d2e53f3" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{ display: 'inline-block' }}
+            >
+              <img src="/images/UMCP_Arcade_Cabinet.png" alt="UMCP Arcade Cabinet" className="mdm-arcade-cabinet" />
+            </a>
+            <p className="mdm-app-name" style={{ marginTop: '5px' }}>Web Version Prototype</p>
           </div>
         </div>
       </div>
