@@ -1,0 +1,164 @@
+/* src/components/ChickenPlatformer.module.css */
+
+:root {
+  --primary-color: #2c3e50; /* Dark blue-grey */
+  --secondary-color: #e74c3c; /* Red */
+  --game-area-bg-color: #f7f7f7; /* Off-white like dino game */
+  --light-text: #ecf0f1;
+  --dark-text: #34495e;
+  /* Game specific variables */
+}
+
+.section {
+  background-color: var(--light-bg);
+  padding: 100px 0 80px;
+  color: var(--dark-text);
+  overflow: hidden;
+  text-align: center;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.heading {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 30px;
+  color: var(--primary-color);
+}
+
+.paragraph {
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  max-width: 800px;
+  margin: 0 auto 60px;
+  color: var(--secondary-color);
+}
+
+.gameArea {
+  /* Define CSS variables based on JS constants */
+  --game-height: 150px;
+  --game-width: 600px;
+
+  height: var(--game-height);
+  max-width: var(--game-width);
+  margin: 90px auto 0; /* Increased top margin to prevent chicken cutoff */
+  background-color: var(--game-area-bg-color);
+  border-radius: 8px;
+  position: relative;
+  overflow: visible; /* Allow content to overflow (for jumping chicken) */
+  border: 3px solid var(--primary-color);
+  border-bottom: 2px solid #535353; /* Ground line */
+  cursor: pointer;
+  overflow: hidden; /* Crucial to clip the scrolling backgrounds */
+}
+
+.chicken {
+  /* Define CSS variables based on JS constants */
+  --chicken-size: 35px; /* Default/fallback size */ 
+  --ground-level: calc(150px - 35px); /* GAME_HEIGHT - CHICKEN_SIZE */
+  --chicken-x-position: 50px;
+
+  position: absolute;
+  bottom: 0; /* Starts on the ground line */
+  left: var(--chicken-x-position);
+  width: var(--chicken-size);
+  height: var(--chicken-size);
+  overflow: hidden; /* Hide parts of image if container is smaller */
+  /* Transition for smooth landing/ducking (if height changes) */
+  /* transition: height 0.1s ease-out; */ /* Transition likely not needed without dynamic height */
+}
+
+.obstacle {
+  /* background-color removed, using img now */
+  position: absolute; /* Positioned relative to gameArea */
+  bottom: 0; /* Obstacles sit on the ground line */
+  /* Let width/height be controlled by JS state via style prop for hitbox */
+  /* Ensure x/y position is set via inline styles */
+}
+
+.scoreDisplay {
+  position: absolute;
+  top: 5px;
+  right: 10px; /* Position top-right */
+  font-size: 1.2rem;
+  color: #535353; /* Grey text */
+  font-family: 'Courier New', Courier, monospace; /* Pixelated feel */
+}
+
+.gameOverOverlay {
+  --game-over-text-color: red;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 15px 25px;
+  border-radius: 10px;
+  border: 2px solid var(--game-over-text-color);
+  z-index: 10;
+}
+
+.gameOverText {
+  --game-over-text-color: red;
+  color: var(--game-over-text-color);
+  font-size: 1.8em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.gameOverSubtext {
+  font-size: 1.0em;
+  color: #333;
+}
+
+/* Animation for the background */
+@keyframes moveBackground {
+  0% { background-position: 0 0; }
+  100% { background-position: -100px 0; } /* Adjust speed by changing position */
+}
+
+/* Keyframes for scrolling */
+@keyframes scrollBg {
+  from { background-position-x: 0px; }
+  to { background-position-x: -1000px; } /* Adjust width based on pattern size */
+}
+
+.bgLayerBase {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-repeat: repeat-x;
+  animation-name: scrollBg;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  z-index: 0; /* Behind chicken/obstacles but above gameArea bg */
+}
+
+.bgLayerFar {
+  composes: bgLayerBase;
+  /* Simple pale hills/clouds gradient */
+  background-image: radial-gradient(circle at 20% 80%, #f0ead6 10px, transparent 11px),
+                    radial-gradient(circle at 50% 75%, #e8e0c4 15px, transparent 16px),
+                    radial-gradient(circle at 85% 85%, #f5f0e1 12px, transparent 13px);
+  background-size: 200px 100%; /* Width of one pattern repeat */
+  animation-duration: 40s; /* Slower scroll speed */
+  opacity: 0.7;
+}
+
+.bgLayerNear {
+  composes: bgLayerBase;
+  /* Slightly larger/darker shapes */
+  background-image: radial-gradient(ellipse at 15% 90%, #d9caae 20px, transparent 21px),
+                    radial-gradient(ellipse at 60% 85%, #c7bba1 25px, transparent 26px);
+  background-size: 300px 100%; /* Width of one pattern repeat */
+  animation-duration: 20s; /* Faster scroll speed */
+  opacity: 0.8;
+}

@@ -3,6 +3,7 @@ import './App.css';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Features from './components/Features';
+import ChickenPlatformer from './components/ChickenPlatformer';
 import CozyMechanics from './components/CozyMechanics';
 import Characters from './components/Characters';
 import Gameplay from './components/Gameplay';
@@ -172,6 +173,7 @@ function App() {
     <div className="App">
       <Header />
       <Hero />
+      <ChickenPlatformer />
       <section className="pet-interaction">
         <h2>MCP Virtual Pet Simulator</h2>
 
