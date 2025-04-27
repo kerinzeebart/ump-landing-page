@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import styles from './ChickenPlatformer.module.css'; // Import CSS Module
 
@@ -41,9 +41,13 @@ function ChickenPlatformer() {
   const [gameOver, setGameOver] = useState(false);
   const [highScore, setHighScore] = useState(0); // Placeholder for HI score
   const [showCollisionEffect, setShowCollisionEffect] = useState(false);
+  const [mouseX, setMouseX] = useState(0);
+  const [mouseY, setMouseY] = useState(0);
 
   // Animation controls (Only for game area effects now)
   const gameAreaControls = useAnimation();
+
+  const gameAreaRef = useRef(null);
 
   // --- Jump Logic (Simplified Dino Style) --- 
   const handleJump = useCallback(() => {
@@ -154,9 +158,10 @@ function ChickenPlatformer() {
 
     // Cleanup function to cancel the animation frame when component unmounts or game ends
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
     };
-    // Dependencies updated for obstacle logic
   }, [gameOver, chickenY, isJumping, obstacleX, score, highScore]); 
     
   // Effect to animate collision feedback (No change needed here)
@@ -198,6 +203,33 @@ function ChickenPlatformer() {
     // Dependencies updated
   }, [gameOver, handleJump, isJumping]); 
   
+  // Effect to track mouse position within the game area
+  useEffect(() => {
+    const gameArea = gameAreaRef.current;
+
+    const handleMouseMove = (event) => {
+      if (gameArea) {
+        const rect = gameArea.getBoundingClientRect();
+        // Calculate mouse position relative to the game area
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        setMouseX(x);
+        setMouseY(y);
+      }
+    };
+
+    if (gameArea) {
+      gameArea.addEventListener('mousemove', handleMouseMove);
+    }
+
+    // Cleanup listener on component unmount
+    return () => {
+      if (gameArea) {
+        gameArea.removeEventListener('mousemove', handleMouseMove);
+      }
+    };
+  }, []); // Empty dependency array ensures this runs only on mount and unmount
+
   // --- Render --- 
   const gameAreaStyle = {
     // ... (rest of the code remains the same)
@@ -221,10 +253,22 @@ function ChickenPlatformer() {
             '--game-area-bg-color': '#e0f7fa'
           }} 
           animate={gameAreaControls}
+          ref={gameAreaRef}
         >
           {/* Background Layers */} 
           <div className={styles.bgLayerFar}></div>
           <div className={styles.bgLayerNear}></div>
+
+          {/* Camera Emoji following mouse */}
+          <span 
+            className={styles.cameraEmoji}
+            style={{
+              // Position based on state, apply 50px left offset
+              transform: `translate(${mouseX - 50}px, ${mouseY}px)`
+            }}
+          >
+            📸
+          </span>
 
           {/* Chicken rendering (positioning controlled by state via animate) */}
           <motion.div

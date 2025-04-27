@@ -926,7 +926,7 @@ function CozyMechanics() {
               textAlign: 'center',
               wordBreak: 'break-word', // Prevent overflow on small screens
               hyphens: 'auto'
-            }}>Monetization (Cozy-Friendly)</h3>
+            }}>Monetization (Community Focused)</h3>
             
             <div style={{ marginBottom: '30px' }}>
               <h4 style={{ 
@@ -945,42 +945,11 @@ function CozyMechanics() {
                 marginBottom: '30px',
                 width: '100%',
                 boxSizing: 'border-box'
-              }}>$15 (includes all content)</p>
-            </div>
-            
-            <div>
-              <h4 style={{ 
-                fontSize: '1.3rem', 
-                color: 'var(--secondary-color)',
-                marginBottom: '15px' 
-              }}>DLC:</h4>
-              
-              <div style={{ 
-                display: 'flex', 
-                flexDirection: 'column', 
-                gap: 'clamp(15px, 3vw, 25px)', // Responsive gap
-                width: '100%'
-              }}>
-                <div style={{ 
-                  backgroundColor: 'rgba(244, 162, 97, 0.1)', 
-                  padding: '20px', 
-                  borderRadius: '12px',
-                  border: '1px solid rgba(244, 162, 97, 0.3)'
-                }}>
-                  <h5 style={{ fontSize: '1.1rem', color: 'var(--secondary-color)', marginBottom: '10px' }}>Aussie Outback Pack</h5>
-                  <p>Koala-themed coop decorations.</p>
-                </div>
-                
-                <div style={{ 
-                  backgroundColor: 'rgba(230, 57, 70, 0.1)', 
-                  padding: '20px', 
-                  borderRadius: '12px',
-                  border: '1px solid rgba(230, 57, 70, 0.3)'
-                }}>
-                  <h5 style={{ fontSize: '1.1rem', color: 'var(--primary-color)', marginBottom: '10px' }}>Polish Winter Wonderland</h5>
-                  <p>Snowy farm skin + pierogi recipe.</p>
-                </div>
-              </div>
+              }}>$1 (Join the Journey!)</p>
+              <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginTop: '15px', fontSize: 'clamp(0.9rem, 2vw, 1.1rem)' }}>
+                Our goal? Prove you can build something epic and reach $1,000,000 starting with just $1. 
+                Your support helps make this dream a reality. Let's build this together!
+              </p>
             </div>
           </div>
           

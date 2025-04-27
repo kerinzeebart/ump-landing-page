@@ -1,32 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../App.css';
 
-function Header() {
-  const [scrolled, setScrolled] = useState(false);
+function Header({ isScrolled }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   // Close mobile menu when a link is clicked
   const handleLinkClick = () => {
     setMobileMenuOpen(false);
   };
 
   const headerStyle = {
-    backgroundColor: scrolled ? 'rgba(255, 255, 255, 0.95)' : 'transparent',
-    boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.1)' : 'none',
-    padding: scrolled ? '10px 20px' : '20px',
+    backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.95)' : 'transparent',
+    boxShadow: isScrolled ? '0 4px 20px rgba(0,0,0,0.1)' : 'none',
+    padding: isScrolled ? '10px 20px' : '20px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -42,7 +28,7 @@ function Header() {
     margin: 0,
     display: 'flex',
     alignItems: 'center',
-    fontSize: scrolled ? '1.8rem' : '2.2rem',
+    fontSize: isScrolled ? '1.8rem' : '2.2rem',
     transition: 'font-size 0.3s ease'
   };
 
@@ -117,7 +103,7 @@ function Header() {
     <header style={headerStyle}>
       <h1 style={logoStyle}>
         <span style={{ color: '#e63946' }}>UMCP</span>
-        <span style={{ fontSize: '0.8em', marginLeft: '10px', fontWeight: 'normal', color: '#495057' }}>Chicken Patrol</span>
+        <span style={{ fontSize: '0.8em', marginLeft: '10px', fontWeight: 'normal', color: '#495057' }}>Chicken Play</span>
       </h1>
       
       {/* Desktop Navigation */}

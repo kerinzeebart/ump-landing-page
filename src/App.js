@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import Features from './components/Features';
+// import MistralChat from './components/MistralChat'; // Temporarily commented out
+import TamagotchiGame from './components/TamagotchiGame/TamagotchiGame';
 import ChickenPlatformer from './components/ChickenPlatformer';
 import CozyMechanics from './components/CozyMechanics';
 import Characters from './components/Characters';
 import Gameplay from './components/Gameplay';
 import VideoGallery from './components/VideoGallery';
-import FeatheredMemories from './components/FeatheredMemories';
 import Connectivity from './components/Connectivity';
 import Game from './components/Game/Game';
 import Footer from './components/Footer';
@@ -20,7 +20,31 @@ function App() {
   const [error, setError] = useState(null);
   const [connected, setConnected] = useState(false);
   const [currentPet, setCurrentPet] = useState(null);
-  
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  // Scroll handler
+  const handleScroll = () => {
+    const currentScrollY = window.scrollY;
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const currentProgress = maxScroll > 0 ? currentScrollY / maxScroll : 0;
+    
+    setScrollY(currentScrollY);
+    setScrollProgress(currentProgress);
+    setIsScrolled(currentScrollY > 50); // Trigger change after scrolling 50px
+  };
+
+  // Effect to add/remove scroll listener
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Cleanup listener on component unmount
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []); // Empty dependency array ensures this runs only once on mount
+
   // Function to execute MCP commands using MCPClient and WebSockets
   const executeMcpCommand = async (command, ...args) => {
     setLoading(true);
@@ -174,8 +198,13 @@ function App() {
   
   return (
     <div className="App">
-      <Header />
-      <Hero />
+      {/* Pass isScrolled state to Header */}
+      <Header isScrolled={isScrolled} />
+      {/* Pass scrollY state to TamagotchiGame */}
+      <TamagotchiGame scrollY={scrollY} />
+      {/* Pass scrollProgress state to Hero */}
+      <Hero scrollProgress={scrollProgress} />
+      {/* <MistralChat /> */}{/* Temporarily commented out */}
       <ChickenPlatformer />
       <section className="pet-interaction">
         <h2>MCP Virtual Pet Simulator</h2>
@@ -351,12 +380,10 @@ function App() {
 
         {loading && <div className="loading">Loading...</div>}
       </section>
-      <Features />
       <CozyMechanics />
       <Characters />
       <Gameplay />
       <VideoGallery />
-      <FeatheredMemories />
       <Connectivity />
       <Game />
       <Footer />

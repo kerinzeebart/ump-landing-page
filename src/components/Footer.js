@@ -145,7 +145,17 @@ function Footer() {
         </div>
         
         <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '30px', marginTop: '30px', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px' }}>
-          <p style={{ color: 'var(--light-text)' }}>&copy; 2025 Ultra Mega Chicken Patrol. All rights reserved.</p>
+          <p style={{ color: 'var(--light-text)' }}>
+            &copy; {new Date().getFullYear()} Chicken Play. Released under the{' '}
+            <a 
+              href="https://opensource.org/licenses/MIT" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{ color: 'var(--primary-color)', textDecoration: 'none', transition: 'color 0.3s ease', '&:hover': { color: 'var(--link-hover-color)' } }}
+            >
+              MIT License
+            </a>.
+          </p>
           <div>
             <a href="#" style={{ color: 'var(--light-text)', marginLeft: '20px', textDecoration: 'none', fontSize: '0.9rem', '&:hover': { color: 'var(--primary-color)' } }}>Privacy Policy</a>
             <a href="#" style={{ color: 'var(--light-text)', marginLeft: '20px', textDecoration: 'none', fontSize: '0.9rem', '&:hover': { color: 'var(--primary-color)' } }}>Terms of Service</a>

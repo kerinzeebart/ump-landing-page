@@ -2,40 +2,51 @@ import React, { useState, useEffect, useRef } from 'react';
 import '../App.css';
 import '../Modal.css';
 import MobileDeviceMockupIPhone from './MobileDeviceMockupIPhone';
+import eggSvg from '../assets/egg.svg';
 
-function Hero() {
+// Accept scrollProgress prop
+function Hero({ scrollProgress }) {
   const chickenRef = useRef(null);
   const eggRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+  // Store anime instances and elements in refs to access in different effects
+  const animeRef = useRef(null);
+  const chickenAnimRef = useRef(null);
+  const eggAnimRef = useRef(null);
+  const elementsRef = useRef({ chickenEl: null, eggEl: null });
+
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
-  // Create refs to store event handler functions
-  const onScrollRef = useRef(null);
-  const handleResizeRef = useRef(null);
-  
+  // Effect for initialization and resize handling
   useEffect(() => {
     // Dynamically import anime.js
     import('animejs').then(module => {
-      // Get the default export or the module itself
       const anime = module.default || module;
-      const chickenEl = chickenRef.current;
-      const eggEl = eggRef.current;
+      animeRef.current = anime; // Store anime instance
+      
+      elementsRef.current.chickenEl = chickenRef.current;
+      elementsRef.current.eggEl = eggRef.current;
+
       let startX, endX;
-      let chickenAnim, eggAnim;
 
       function calcDistances() {
+        const { chickenEl, eggEl } = elementsRef.current;
+        if (!chickenEl || !eggEl) return;
         const cw = chickenEl.offsetWidth;
         startX = -cw;
         endX = eggEl.getBoundingClientRect().left - cw * 0.2;
       }
 
       function buildAnims() {
+        const { chickenEl, eggEl } = elementsRef.current;
+        if (!animeRef.current || !chickenEl || !eggEl) return;
+
         // Create chicken animation
-        chickenAnim = anime({
+        chickenAnimRef.current = animeRef.current({
           targets: chickenEl,
           translateX: [startX, endX],
           rotate: [0, 540],
@@ -45,7 +56,7 @@ function Hero() {
         });
 
         // Create egg animation
-        eggAnim = anime({
+        eggAnimRef.current = animeRef.current({
           targets: eggEl,
           opacity: [0, 1],
           duration: 350,
@@ -54,60 +65,61 @@ function Hero() {
         });
       }
 
-      // Define the scroll handler and store it in the ref
-      onScrollRef.current = function onScroll() {
-        if (!chickenAnim || !eggAnim) return;
-        
-        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-        const rawProg = maxScroll ? window.scrollY / maxScroll : 0;
-        const walkProg = Math.min(rawProg / 0.97, 1);
-
-        // Update chicken animation progress
-        chickenAnim.seek(walkProg * chickenAnim.duration);
-
-        // Handle egg animation
-        if (rawProg > 0.97) {
-          eggAnim.play();
-          eggAnim.seek(eggAnim.duration);
-        } else {
-          eggAnim.seek(0);
-        }
-      };
-
-      // Define the resize handler and store it in the ref
-      handleResizeRef.current = function handleResize() {
+      // Define the resize handler 
+      const handleResize = function handleResize() {
         calcDistances();
         buildAnims();
-        if (onScrollRef.current) onScrollRef.current();
+        // Update animation based on current progress after resize
+        updateAnimationProgress(scrollProgress);
       };
 
       function init() {
         calcDistances();
         buildAnims();
-        if (onScrollRef.current) onScrollRef.current();
+        updateAnimationProgress(scrollProgress); // Initial update based on prop
       }
 
       init();
       
-      // Add event listeners using the refs
-      window.addEventListener('scroll', onScrollRef.current, { passive: true });
-      window.addEventListener('resize', handleResizeRef.current, { passive: true });
+      // Add only resize event listener 
+      window.addEventListener('resize', handleResize, { passive: true });
+      
+      // Return cleanup function for resize listener
+      return () => {
+        window.removeEventListener('resize', handleResize, { passive: true });
+      };
+
     }).catch(error => {
       console.error('Failed to load anime.js:', error);
     });
     
-    // Return cleanup function
-    return () => {
-      // Remove event listeners using the refs
-      if (onScrollRef.current) {
-        window.removeEventListener('scroll', onScrollRef.current, { passive: true });
-      }
-      if (handleResizeRef.current) {
-        window.removeEventListener('resize', handleResizeRef.current, { passive: true });
-      }
-    };
+  }, []); // Run only on mount
 
-  }, []);
+  // Function to update animation based on scroll progress
+  const updateAnimationProgress = (progress) => {
+    const chickenAnim = chickenAnimRef.current;
+    const eggAnim = eggAnimRef.current;
+
+    if (!chickenAnim || !eggAnim) return;
+    
+    const walkProg = Math.min(progress / 0.97, 1);
+
+    // Update chicken animation progress
+    chickenAnim.seek(walkProg * chickenAnim.duration);
+
+    // Handle egg animation
+    if (progress > 0.97) {
+      if (!eggAnim.began) eggAnim.play(); // Play only once when threshold crossed
+      eggAnim.seek(eggAnim.duration); // Ensure it stays at the end state
+    } else {
+      if (eggAnim.progress > 0) eggAnim.seek(0); // Reset if scrolled back up
+    }
+  };
+
+  // Effect to update animation when scrollProgress prop changes
+  useEffect(() => {
+    updateAnimationProgress(scrollProgress);
+  }, [scrollProgress]); // Dependency array includes scrollProgress
 
   const openTrailerModal = () => {
     setShowModal(true);
@@ -142,8 +154,11 @@ function Hero() {
 
   return (
     <>
-      <div id="scene" style={{ position: 'fixed', left: 0, bottom: '10vh', width: '100vw', overflow: 'visible', pointerEvents: 'none' }}>
-        <div id="chicken" ref={chickenRef} style={{ position: 'absolute', bottom: 0, willChange: 'transform, opacity' }}>🐔</div>
+      {/* Add zIndex to this container */}
+      <div id="scene" style={{ position: 'fixed', left: 0, bottom: '10vh', width: '100vw', overflow: 'visible', pointerEvents: 'none', zIndex: 1000 }}>
+        <div id="chicken" ref={chickenRef} style={{ position: 'absolute', bottom: 0, willChange: 'transform, opacity' }}>
+          <img src={eggSvg} alt="Rolling Egg" style={{ display: 'block', width: '40px', height: 'auto' }} />
+        </div>
         <div id="egg" ref={eggRef} style={{ position: 'absolute', bottom: 0, right: '10vw', opacity: 0, willChange: 'transform, opacity' }}>🥚</div>
       </div>
       <section style={{
@@ -213,14 +228,14 @@ function Hero() {
               <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '15px' }}>
                 <span style={{ fontSize: '1.5rem', marginRight: '15px', color: '#e63946' }}>1️⃣</span>
                 <p style={{ margin: 0, fontSize: '1.1rem' }}>
-                  <strong style={{ color: '#f4a261' }}>Your idea</strong> – you just type what you want on‑screen: "snowy valley," "moving robot," "wooden bridge."
+                  You parkour chickens in Unreal Engine
                 </p>
               </div>
               
               <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '15px' }}>
                 <span style={{ fontSize: '1.5rem', marginRight: '15px', color: '#e63946' }}>2️⃣</span>
                 <p style={{ margin: 0, fontSize: '1.1rem' }}>
-                  <strong style={{ color: '#f4a261' }}>A digital helper</strong> – a smart program that hunts down or builds those objects for you and hands them to the game engine.
+                  Camera Operator
                 </p>
               </div>
               
