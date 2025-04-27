@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Typography, Paper, LinearProgress } from '@mui/material';
+import { Box, Typography, Paper, LinearProgress, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 // Helper for progress bar label (can be extracted if used elsewhere)
 function LinearProgressWithLabel(props) {
@@ -8,43 +9,92 @@ function LinearProgressWithLabel(props) {
       <Box sx={{ width: '100%', mr: 1 }}>
         <LinearProgress variant="determinate" {...props} />
       </Box>
-      <Box sx={{ minWidth: 35, textAlign: 'right' }}>
-        <Typography variant="caption" color="text.secondary">{`${Math.round(props.value)}`}</Typography>
-      </Box>
     </Box>
   );
 }
 
-export default function StatsOverlay({ health, hunger, happiness, age }) {
+export default function StatsOverlay({ stats, onClose, sx }) {
+  // Original simpler check: If stats is null or undefined, don't render
+  if (!stats) {
+    console.warn('StatsOverlay received falsy stats prop:', stats);
+    return null;
+  }
+  
+  const { health, hunger, happiness, age } = stats; 
+
+  // Format age here now that raw age is passed
+  const displayAge = (typeof age === 'number') ? `${age.toFixed(1)} years` : '...';
+
   return (
     <Paper 
       elevation={3} 
-      sx={{ 
-        position: 'fixed',
-        bottom: '20px',
-        right: '20px',
-        padding: '10px 15px',
-        borderRadius: '12px',
-        zIndex: 1000,
-        minWidth: '120px',
-        backgroundColor: 'var(--dark-secondary)', 
-        color: 'var(--text-primary)', 
-        boxShadow: '0px 5px 15px rgba(0, 0, 0, 0.4)' 
+      sx={{
+        position: 'fixed', // Fix position relative to viewport
+        bottom: 16,       // Distance from bottom
+        right: 16,        // Distance from right
+        zIndex: 1000,      // Ensure it's above other content
+        p: 2,             // Slightly more padding
+        minWidth: '150px', 
+        maxWidth: '200px',
+        display: 'inline-flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        backgroundColor: 'rgba(34, 84, 34, 0.9)', // Dark green semi-transparent background
+        border: '2px solid #50C878',            // Emerald green border
+        borderRadius: '15px',                   // More rounded corners
+        boxShadow: '0px 0px 10px rgba(80, 200, 120, 0.5)', // Subtle green glow
+        color: '#98FB98',                      // Pale green text color
+        ...sx 
       }}
     >
-      <Typography variant="caption" component="div" sx={{ fontWeight: 'bold', mb: 0.5, color: 'var(--secondary-color)' }}>Pet Stats</Typography>
-      <Typography variant="caption" component="p" sx={{ lineHeight: 1.2, mb: 0.5, color: 'var(--text-secondary)' }}>Age {age !== undefined ? age.toFixed(1) + ' years' : '...'}</Typography>
-      <Box sx={{ width: '100%' }}>
-        <Typography variant="caption" component="p" sx={{ lineHeight: 1.2, color: 'var(--text-secondary)' }}>Health</Typography>
-        <LinearProgressWithLabel value={health} color="error" sx={{ height: 6, borderRadius: 3 }} />
+      {/* Close Button */}
+      <IconButton 
+        aria-label="close stats" 
+        onClick={onClose} 
+        sx={{
+          position: 'absolute', 
+          top: 4, 
+          left: 4, 
+          color: '#98FB98', // Match text color
+          '&:hover': {
+            backgroundColor: 'rgba(80, 200, 120, 0.2)' // Greenish hover
+          }
+        }}
+      >
+        <CloseIcon fontSize="small" /> 
+      </IconButton>
+
+      <Typography variant="caption" component="div" sx={{ fontWeight: 'bold', color: '#98FB98', alignSelf: 'center', mb: 0.5, mt: 2 }}> 
+        Pet Stats
+      </Typography>
+      <Typography variant="caption" component="p" sx={{ lineHeight: 1.2, mb: 0.5, color: '#98FB98', alignSelf: 'center' }}>Age {displayAge}</Typography>
+      
+      <Box sx={{ width: '100%', mt: 1 }}> 
+        <Typography variant="caption" component="p" sx={{ lineHeight: 1.2, color: '#98FB98' }}>Health</Typography>
+        <LinearProgress
+          variant="determinate"
+          value={health}
+          color="error" // Use theme's error color (red)
+          sx={{ height: 8, borderRadius: 4 }}
+        />
       </Box>
       <Box sx={{ width: '100%', mt: 0.5 }}>
-        <Typography variant="caption" component="p" sx={{ lineHeight: 1.2, color: 'var(--text-secondary)' }}>Hunger</Typography>
-        <LinearProgressWithLabel value={hunger} color="primary" sx={{ height: 6, borderRadius: 3 }} />
+        <Typography variant="caption" component="p" sx={{ lineHeight: 1.2, color: '#98FB98' }}>Hunger</Typography>
+        <LinearProgress
+          variant="determinate"
+          value={hunger}
+          color="primary" // Use theme's primary color (blue)
+          sx={{ height: 8, borderRadius: 4 }}
+        />
       </Box>
       <Box sx={{ width: '100%', mt: 0.5 }}>
-        <Typography variant="caption" component="p" sx={{ lineHeight: 1.2, color: 'var(--text-secondary)' }}>Happiness</Typography>
-        <LinearProgressWithLabel value={happiness} color="success" sx={{ height: 6, borderRadius: 3 }} />
+        <Typography variant="caption" component="p" sx={{ lineHeight: 1.2, color: '#98FB98' }}>Happiness</Typography>
+        <LinearProgress
+          variant="determinate"
+          value={happiness}
+          color="success" // Use theme's success color (green)
+          sx={{ height: 8, borderRadius: 4 }}
+        />
       </Box>
     </Paper>
   );

@@ -110,7 +110,9 @@ export default function TamagotchiGame({ scrollY }) {
   const eventTimeoutRef = useRef(null);
   const actionTimeoutRef = useRef(null); 
   const gameGridRef = useRef(null); // Ref for the main game grid
-  const [isGameVisible, setIsGameVisible] = useState(true); // State for visibility
+  const [isGameVisible, setIsGameVisible] = useState(true); // State for game visibility (used by IntersectionObserver)
+  const [isStatsOverlayVisible, setIsStatsOverlayVisible] = useState(true); // State specifically for stats overlay visibility
+  const [showStickyStats, setShowStickyStats] = useState(false); // New state: Show only after scroll
   const dayDuration = useRef(DAY_DURATION_MS); // Use ref if it might change, or just use constant
   const [pooCount, setPooCount] = useState(0);
 
@@ -138,6 +140,21 @@ export default function TamagotchiGame({ scrollY }) {
       if (currentRef) {
         observer.unobserve(currentRef);
       }
+    };
+  }, []); // Empty dependency array ensures this runs only once
+
+  // Effect for Scroll Listener to show/hide sticky stats
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show sticky stats if scrolled down more than, say, 10 pixels
+      setShowStickyStats(window.scrollY > 10);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    // Cleanup listener on component unmount
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []); // Empty dependency array ensures this runs only once
 
@@ -462,6 +479,11 @@ export default function TamagotchiGame({ scrollY }) {
     );
   }
 
+  // Renamed handler specifically for the overlay's close button
+  const handleCloseStatsOverlay = () => {
+    setIsStatsOverlayVisible(false); // Just hide the overlay when closed
+  };
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -624,8 +646,13 @@ export default function TamagotchiGame({ scrollY }) {
         </Grid>
       </Paper>
 
-      {/* Conditionally render the overlay - Pass age prop */}
-      {!isGameVisible && <StatsOverlay health={health} hunger={hunger} happiness={happiness} age={age} />}
+      {/* Conditionally render the overlay - controlled by its own state AND scroll position */}
+      {isStatsOverlayVisible && showStickyStats && // Only show if not closed AND scrolled
+        <StatsOverlay 
+          stats={{ health, hunger, happiness, age }} // Pass raw age state
+          onClose={handleCloseStatsOverlay} // Pass the new handler
+        />
+      }
 
       {/* Dialog for game end remains the same */}
       <Dialog
